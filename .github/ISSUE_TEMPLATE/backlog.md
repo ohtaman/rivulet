@@ -10,12 +10,6 @@ assignees: ''
 **Description**
 Provide a clear and concise description of the item.
 
-**Type**
-- [ ] Feature
-- [ ] Improvement
-- [ ] Bug
-- [ ] Task
-
 **Acceptance Criteria**
 - [ ] Criterion 1
 - [ ] Criterion 2
