@@ -1,12 +1,3 @@
----
-name: Backlog Item
-about: Describe a new feature, improvement, bug fix, or task
-title: ''
-labels: backlog
-assignees: ''
-
----
-
 **Description**
 Provide a clear and concise description of the item.
 
