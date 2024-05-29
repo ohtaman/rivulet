@@ -1,15 +1,28 @@
+import asyncio
+from collections import defaultdict
 import json
 
 from fastapi import APIRouter, Request
-from fastapi.responses import StreamingResponse, JSONResponse
+from fastapi.responses import JSONResponse
 
 router = APIRouter()
 
-@router.get("/event")
-async def event_endpoint():
-    events = [
-        {"id": 1, "name": "Event 1"},
-        {"id": 2, "name": "Event 2"},
-        {"id": 3, "name": "Event 3"},
+component_state = defaultdict(dict) # global state
+
+def generate_virtual_dom():
+    return [
+        {"tag": "div", "id": component_id, "states": states}
+        for component_id, states in component_state.items()
     ]
-    return StreamingResponse((f"data: {json.dumps(event, ensure_ascii=False)}\n\n" for event in events), media_type="text/event-stream")
+
+
+@router.get("/components")
+async def get_components():
+    return JSONResponse(content=generate_virtual_dom())
+
+
+@router.post("/components/{component_id}/states/{state_name}")
+async def update_component_state(component_id: str, state_name: str, request: Request):
+    state = await request.json()
+    component_state[component_id][state_name] = state
+    return JSONResponse(content=generate_virtual_dom())
